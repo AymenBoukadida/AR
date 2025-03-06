@@ -9,6 +9,7 @@ This is a **marker-based Augmented Reality (AR) web application** that uses **A-
 - ⚡ Lightweight and fast with **A-Frame & AR.js**  
 
 ## 📖 How to Use (Mobile)  
+- Scan the Hiro.png
 
 ### 1️⃣ Host the project  
 Clone the repository and serve it:  
