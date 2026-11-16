@@ -1,0 +1,177 @@
+:root {
+  color: #f7f4ed;
+  background: #101b2d;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at top right, #d86f45 0, transparent 38%), #101b2d;
+}
+
+.hero {
+  width: min(100%, 34rem);
+  padding: 2rem;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 1.5rem;
+  background: rgb(16 27 45 / 82%);
+  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 28%);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: #f6b44d;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2.4rem, 11vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.hero-copy {
+  max-width: 32rem;
+  margin: 1.25rem 0 0;
+  color: #d3dae5;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.campaign-id {
+  color: #a9b5c7;
+  font-size: 0.8rem;
+}
+
+.primary-action {
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  color: #101b2d;
+  background: #f6b44d;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.primary-action:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.collection-section {
+  width: min(100%, 42rem);
+  margin-top: 1.5rem;
+}
+
+.collection-section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.progress,
+.rarity {
+  color: #f6b44d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.collection-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.collectible-card {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.9rem;
+  padding: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 6%);
+}
+
+.collectible-image {
+  min-height: 5rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 8%) center / cover no-repeat;
+}
+
+.collectible-card h3,
+.collectible-card p {
+  margin: 0.2rem 0;
+}
+
+.collectible-card h3 {
+  font-size: 1rem;
+}
+
+.collectible-card p:not(.rarity) {
+  color: #d3dae5;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.clue {
+  color: #f6b44d !important;
+}
+
+.scanner {
+  position: relative;
+  width: 100%;
+  min-height: 4rem;
+  margin-top: 1rem;
+}
+
+.feedback {
+  padding: 1rem;
+  border: 1px solid rgb(246 180 77 / 45%);
+  border-radius: 1rem;
+  background: rgb(246 180 77 / 10%);
+}
+
+.feedback p {
+  color: #d3dae5;
+  line-height: 1.5;
+}
+
+.feedback button {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #f6b44d;
+  border-radius: 999px;
+  color: #f7f4ed;
+  background: transparent;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
