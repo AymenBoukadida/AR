@@ -13,3 +13,7 @@ Task 3: complete (tests: `npm test -- --run` → 4 files, 7 tests passed)
 Task 4: complete (tests: `npm test -- --run` → 5 files, 10 tests passed; build successful)
 
 Task 5: complete (tests: `npm test -- --run` → 7 files, 16 tests passed; build successful)
+
+Task 6: complete (tests: `npm test -- --run` → 7 files, 16 tests passed; `npm run lint` passed; `npm run build` succeeded)
+
+Task 6: Ruling: Vite 6 rejects the legacy `--https` CLI flag, so HTTPS is configured through `@vitejs/plugin-basic-ssl` and `dev:phone` only passes `--host 0.0.0.0` — this preserves secure-context camera testing; cost if the local certificate is not trusted is that the user must accept the browser warning or use a tunnel.
