@@ -17,3 +17,5 @@ Task 5: complete (tests: `npm test -- --run` → 7 files, 16 tests passed; build
 Task 6: complete (tests: `npm test -- --run` → 7 files, 16 tests passed; `npm run lint` passed; `npm run build` succeeded)
 
 Task 6: Ruling: Vite 6 rejects the legacy `--https` CLI flag, so HTTPS is configured through `@vitejs/plugin-basic-ssl` and `dev:phone` only passes `--host 0.0.0.0` — this preserves secure-context camera testing; cost if the local certificate is not trusted is that the user must accept the browser warning or use a tunnel.
+
+Final review: self-review (no subagent tool). `git diff --check main...HEAD` passed; fresh `npm test -- --run` passed with 7 files and 16 tests; `npm run lint` passed; `npm run build` passed. Known limitation: the first MVP uses one Hiro marker, so only the first stop can be demonstrated until unique markers or QR identifiers are added.
