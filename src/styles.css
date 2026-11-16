@@ -83,6 +83,64 @@ h1 {
   outline-offset: 3px;
 }
 
+.collection-section {
+  width: min(100%, 42rem);
+  margin-top: 1.5rem;
+}
+
+.collection-section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.progress,
+.rarity {
+  color: #f6b44d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.collection-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.collectible-card {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.9rem;
+  padding: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 6%);
+}
+
+.collectible-image {
+  min-height: 5rem;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 8%) center / cover no-repeat;
+}
+
+.collectible-card h3,
+.collectible-card p {
+  margin: 0.2rem 0;
+}
+
+.collectible-card h3 {
+  font-size: 1rem;
+}
+
+.collectible-card p:not(.rarity) {
+  color: #d3dae5;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.clue {
+  color: #f6b44d !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

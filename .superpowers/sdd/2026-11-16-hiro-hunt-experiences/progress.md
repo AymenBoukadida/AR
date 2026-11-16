@@ -9,3 +9,5 @@ Task 1: complete (tests: `npm test -- --run tests/smoke.test.ts tests/pwa.test.t
 Task 2: complete (tests: `npm test -- --run` → 3 files, 4 tests passed)
 
 Task 3: complete (tests: `npm test -- --run` → 4 files, 7 tests passed)
+
+Task 4: complete (tests: `npm test -- --run` → 5 files, 10 tests passed; build successful)
