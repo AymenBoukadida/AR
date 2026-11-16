@@ -7,3 +7,5 @@ Ruling: Use a native Vite/TypeScript build with no backend in the first slice �
 Task 1: complete (tests: `npm test -- --run tests/smoke.test.ts tests/pwa.test.ts` → 2 passed; build: `npm run build` → successful)
 
 Task 2: complete (tests: `npm test -- --run` → 3 files, 4 tests passed)
+
+Task 3: complete (tests: `npm test -- --run` → 4 files, 7 tests passed)
