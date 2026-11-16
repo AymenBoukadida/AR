@@ -5,3 +5,5 @@ Pre-flight: Task 1 produces the application shell consumed by Tasks 2-5; Task 2 
 Ruling: Use a native Vite/TypeScript build with no backend in the first slice — the user wants a phone-testable MVP quickly, and the spec defers accounts, uploads, moderation, analytics, and billing; cost if wrong is a later migration from local content/localStorage to an API.
 
 Task 1: complete (tests: `npm test -- --run tests/smoke.test.ts tests/pwa.test.ts` → 2 passed; build: `npm run build` → successful)
+
+Task 2: complete (tests: `npm test -- --run` → 3 files, 4 tests passed)
