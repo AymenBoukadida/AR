@@ -3,18 +3,27 @@ import { renderAppShell, renderCameraFeedback, renderCollectionPanel } from '../
 import { demoCampaign } from '../src/data/demo-campaign';
 
 describe('campaign UI state', () => {
-  it('renders initial collection progress', () => {
+  it('renders the museum campaign and its progress', () => {
     const html = renderAppShell(demoCampaign, []);
 
-    expect(html).toContain('0 / 5 discovered');
-    expect(html).toContain('Start scanning');
+    expect(html).toContain('The Midnight Museum');
+    expect(html).toContain('0 of 5 discovered');
+    expect(html).toContain('Scan marker');
   });
 
-  it('renders discovered collectible details and clue', () => {
-    const html = renderCollectionPanel(demoCampaign, ['caffeine-wizard']);
+  it('shows the next stop clue', () => {
+    const html = renderAppShell(demoCampaign, ['welcome-raven']);
 
-    expect(html).toContain('The Caffeine Wizard');
-    expect(html).toContain('Start where every journey begins.');
+    expect(html).toContain('Hall of Clocks');
+    expect(html).toContain('every clock disagrees');
+  });
+
+  it('hides undiscovered collectible names', () => {
+    const html = renderCollectionPanel(demoCampaign, ['welcome-raven']);
+
+    expect(html).toContain('The Welcome Raven');
+    expect(html).toContain('Locked');
+    expect(html).not.toContain('The Night Curator');
   });
 
   it('renders recovery guidance when camera access is unavailable', () => {

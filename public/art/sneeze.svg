@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">The Marble Sneeze — specimen plate</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241e19"/>
+      <stop offset="1" stop-color="#12100e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#c9a45f" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#c9a45f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect x="26" y="26" width="1148" height="623" fill="none" stroke="#c9a45f" stroke-opacity="0.4" stroke-width="2"/>
+  <text x="600" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="24" letter-spacing="9" fill="#c9a45f">LUMEN MUSEUM</text>
+  <g fill="#e7c07a">
+    <circle cx="574" cy="300" r="68"/>
+    <path d="M458 470c0-72 52-102 116-102s116 30 116 102z"/>
+  </g>
+  <g fill="none" stroke="#e7c07a" stroke-width="7" stroke-linecap="round">
+    <path d="M650 296h58"/>
+    <path d="M642 326l52 22"/>
+    <path d="M640 266l54-18"/>
+  </g>
+  <text x="600" y="566" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#f6efe3">The Marble Sneeze</text>
+  <text x="600" y="610" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" letter-spacing="7" fill="#b6a893">SPECIMEN 03 · RARE</text>
+</svg>

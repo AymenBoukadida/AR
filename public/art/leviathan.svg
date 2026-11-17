@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">The Tiny Leviathan — specimen plate</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241e19"/>
+      <stop offset="1" stop-color="#12100e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#c9a45f" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#c9a45f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect x="26" y="26" width="1148" height="623" fill="none" stroke="#c9a45f" stroke-opacity="0.4" stroke-width="2"/>
+  <text x="600" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="24" letter-spacing="9" fill="#c9a45f">LUMEN MUSEUM</text>
+  <g fill="#e7c07a">
+    <path d="M470 366c0-58 68-92 148-92s150 38 162 86c12 48-60 78-156 78s-154-24-154-72z"/>
+    <path d="M764 348l78-38-14 62 18 58-82-40z"/>
+  </g>
+  <circle cx="548" cy="344" r="9" fill="#12100e"/>
+  <g fill="none" stroke="#e7c07a" stroke-width="6" stroke-linecap="round">
+    <path d="M560 262c0-28 12-44 28-54"/>
+    <path d="M596 258c0-26 10-40 26-50"/>
+    <path d="M486 478c20-14 40-14 60 0s40 14 60 0 40-14 60 0 40 14 60 0"/>
+  </g>
+  <text x="600" y="566" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#f6efe3">The Tiny Leviathan</text>
+  <text x="600" y="610" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" letter-spacing="7" fill="#b6a893">SPECIMEN 04 · RARE</text>
+</svg>

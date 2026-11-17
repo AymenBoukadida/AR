@@ -1,51 +1,159 @@
-import type { Campaign } from '../domain/campaign';
+import type { HuntTarget } from '../domain/hunt-progress';
 import { requestCameraAccess } from './camera-permissions';
 
+export type ScannerRuntimeStatus = 'starting' | 'scanning' | 'found' | 'error';
+
 export interface ArScanner {
-  start(): Promise<void>;
+  start(target: HuntTarget, container: HTMLElement): Promise<void>;
   stop(): void;
   onDiscovery(callback: (collectibleId: string) => void): void;
+  onStatus(callback: (status: ScannerRuntimeStatus, detail?: string) => void): void;
 }
 
-export function createMarkerDiscoveryHandler(mapping: Record<string, string>, onDiscovery: (collectibleId: string) => void): (markerId: string) => void {
+export function createMarkerDiscoveryHandler(
+  mapping: Record<string, string>,
+  onDiscovery: (collectibleId: string) => void,
+): (markerId: string) => void {
   return (markerId) => {
     const collectibleId = mapping[markerId];
     if (collectibleId) onDiscovery(collectibleId);
   };
 }
 
-export function createArScanner(campaign: Campaign): ArScanner {
-  let discoveryCallback: (collectibleId: string) => void = () => undefined;
-  let scene: HTMLElement | undefined;
+const MAX_PLANE_WIDTH = 2.4;
 
-  const marker = campaign.stops[0];
-  const collectible = campaign.collectibles.find((item) => item.stopId === marker?.id);
+const round = (value: number): number => Math.round(value * 1000) / 1000;
+
+export function planeSizeFor(width: number, height: number): { width: number; height: number } {
+  if (!width || !height) {
+    return { width: MAX_PLANE_WIDTH, height: round(MAX_PLANE_WIDTH * (9 / 16)) };
+  }
+
+  return { width: MAX_PLANE_WIDTH, height: round((MAX_PLANE_WIDTH * height) / width) };
+}
+
+function loadImageSize(src: string): Promise<{ width: number; height: number }> {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve({ width: image.naturalWidth, height: image.naturalHeight });
+    image.onerror = () => resolve({ width: 0, height: 0 });
+    image.src = src;
+  });
+}
+
+export function createArScanner(): ArScanner {
+  let discoveryHandler: (collectibleId: string) => void = () => undefined;
+  let statusHandler: (status: ScannerRuntimeStatus, detail?: string) => void = () => undefined;
+  let scene: HTMLElement | undefined;
+  let found = false;
+  let videoReadyHandler: (() => void) | undefined;
+  let readyTimer: number | undefined;
+
+  const clearListeners = (): void => {
+    if (videoReadyHandler) window.removeEventListener('arjs-video-loaded', videoReadyHandler);
+    videoReadyHandler = undefined;
+    if (readyTimer !== undefined) window.clearTimeout(readyTimer);
+    readyTimer = undefined;
+  };
+
+  const stopVideoTracks = (): void => {
+    if (!scene) return;
+    for (const video of Array.from(scene.querySelectorAll('video'))) {
+      const stream = video.srcObject;
+      if (stream instanceof MediaStream) stream.getTracks().forEach((track) => track.stop());
+      video.srcObject = null;
+    }
+  };
+
+  const stop = (): void => {
+    clearListeners();
+    stopVideoTracks();
+    scene?.remove();
+    scene = undefined;
+    found = false;
+  };
 
   return {
-    async start() {
+    async start(target, container) {
+      stop();
+      statusHandler('starting');
+
       const permission = await requestCameraAccess();
-      if (permission !== 'granted') throw new Error(`camera-${permission}`);
-      if (!marker || !collectible) throw new Error('campaign-marker-missing');
+      if (permission !== 'granted') {
+        statusHandler('error', permission);
+        throw new Error(`camera-${permission}`);
+      }
+
+      if (!customElements.get('a-scene')) {
+        statusHandler('error', 'unsupported');
+        throw new Error('camera-unsupported');
+      }
+
+      const image = await loadImageSize(target.collectible.imageSrc);
+      const plane = planeSizeFor(image.width, image.height);
 
       scene = document.createElement('a-scene');
       scene.setAttribute('embedded', '');
-      scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+      scene.setAttribute('renderer', 'alpha: true; antialias: true;');
+      scene.setAttribute('loading-screen', 'enabled: false');
+      scene.setAttribute('vr-mode-ui', 'enabled: false');
+      scene.setAttribute('device-orientation-permission-ui', 'enabled: false');
+      scene.setAttribute(
+        'arjs',
+        'sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; maxDetectionRate: 60;',
+      );
       scene.innerHTML = `
-        <a-marker type="pattern" url="/pattern-hiro.patt" data-marker-id="${marker.markerId}">
-          <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="2.25" material="shader: flat; src: ${collectible.imageSrc}"></a-plane>
+        <a-marker
+          type="pattern"
+          url="/pattern-hiro.patt"
+          emitevents="true"
+          smooth="true"
+          smoothCount="8"
+          smoothTolerance="0.01"
+          smoothThreshold="4"
+        >
+          <a-entity
+            position="0 0.4 0"
+            animation="property: position; to: 0 0.58 0; dir: alternate; dur: 2400; loop: true; easing: easeInOutSine"
+          >
+            <a-plane
+              width="${plane.width}"
+              height="${plane.height}"
+              material="shader: flat; src: ${target.collectible.imageSrc}; transparent: true; alphaTest: 0.05"
+            ></a-plane>
+          </a-entity>
         </a-marker>
         <a-entity camera></a-entity>
       `;
-      const markerElement = scene.querySelector('a-marker');
-      markerElement?.addEventListener('markerFound', () => discoveryCallback(collectible.id));
-      document.querySelector('#scanner')?.append(scene);
+
+      const marker = scene.querySelector('a-marker');
+      marker?.addEventListener('markerFound', () => {
+        if (found) return;
+        found = true;
+        statusHandler('found');
+        discoveryHandler(target.collectible.id);
+      });
+
+      container.append(scene);
+
+      videoReadyHandler = () => {
+        if (!found) statusHandler('scanning');
+      };
+      window.addEventListener('arjs-video-loaded', videoReadyHandler);
+
+      readyTimer = window.setTimeout(() => {
+        if (!found) statusHandler('scanning');
+      }, 2500);
     },
-    stop() {
-      scene?.remove();
-      scene = undefined;
-    },
+
+    stop,
+
     onDiscovery(callback) {
-      discoveryCallback = callback;
+      discoveryHandler = callback;
+    },
+
+    onStatus(callback) {
+      statusHandler = callback;
     },
   };
 }

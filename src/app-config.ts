@@ -1,4 +1,5 @@
-export const DEFAULT_CAMPAIGN_ID = 'hiro-hunt-demo';
+export const APP_NAME = 'Hiro Hunt';
+export const DEFAULT_CAMPAIGN_ID = 'lumen-museum';
 export const PWA_MANIFEST_PATH = '/manifest.webmanifest';
 export const SERVICE_WORKER_PATH = '/service-worker.js';
 

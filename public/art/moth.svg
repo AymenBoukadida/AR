@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title">
+  <title id="title">The Brass Moth — specimen plate</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241e19"/>
+      <stop offset="1" stop-color="#12100e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#c9a45f" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#c9a45f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect x="26" y="26" width="1148" height="623" fill="none" stroke="#c9a45f" stroke-opacity="0.4" stroke-width="2"/>
+  <text x="600" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="24" letter-spacing="9" fill="#c9a45f">LUMEN MUSEUM</text>
+  <g fill="#e7c07a">
+    <ellipse cx="600" cy="356" rx="17" ry="86"/>
+    <circle cx="600" cy="286" r="22"/>
+    <path d="M586 320c-52-74-104-58-100 4 4 48 50 66 96 58z"/>
+    <path d="M614 320c52-74 104-58 100 4-4 48-50 66-96 58z"/>
+    <path d="M588 376c-42 34-58 86-14 94 30 6 40-46 40-72z" opacity="0.9"/>
+    <path d="M612 376c42 34 58 86 14 94-30 6-40-46-40-72z" opacity="0.9"/>
+  </g>
+  <g fill="none" stroke="#e7c07a" stroke-width="6" stroke-linecap="round">
+    <path d="M588 268c-26-36-52-44-72-36"/>
+    <path d="M612 268c26-36 52-44 72-36"/>
+  </g>
+  <text x="600" y="566" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#f6efe3">The Brass Moth</text>
+  <text x="600" y="610" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" letter-spacing="7" fill="#b6a893">SPECIMEN 02 · COMMON</text>
+</svg>

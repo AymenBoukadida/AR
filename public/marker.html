@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f0d0b" />
+    <title>Hiro Hunt · Test marker</title>
+    <style>
+      :root {
+        --ink: #0f0d0b;
+        --parchment: #f6efe3;
+        --muted: #7d7264;
+        --brass: #a9833f;
+        --line: #d8cdb9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        padding: clamp(1rem, 4vw, 3rem);
+        place-items: center;
+        background:
+          radial-gradient(40rem 24rem at 50% -10%, rgb(169 131 63 / 18%), transparent 60%),
+          #efe6d6;
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      .sheet {
+        width: min(100%, 34rem);
+        padding: clamp(1.2rem, 4vw, 2.2rem);
+        border: 1px solid var(--line);
+        border-radius: 1.5rem;
+        background: var(--parchment);
+        box-shadow: 0 1.5rem 4rem rgb(15 13 11 / 18%);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--brass);
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0.45rem 0 0;
+        font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+        font-size: clamp(1.9rem, 7vw, 2.6rem);
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .lede {
+        margin: 0.8rem 0 0;
+        color: #4b4238;
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+
+      .marker-card {
+        position: relative;
+        margin: 1.4rem auto 0;
+        padding: clamp(0.9rem, 4vw, 1.6rem);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: #fff;
+      }
+
+      .marker-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated;
+      }
+
+      .marker-corner {
+        position: absolute;
+        width: 1.4rem;
+        height: 1.4rem;
+        border: 2px solid var(--brass);
+      }
+
+      .marker-corner.tl {
+        top: -1px;
+        left: -1px;
+        border-right: 0;
+        border-bottom: 0;
+      }
+
+      .marker-corner.tr {
+        top: -1px;
+        right: -1px;
+        border-bottom: 0;
+        border-left: 0;
+      }
+
+      .marker-corner.bl {
+        bottom: -1px;
+        left: -1px;
+        border-top: 0;
+        border-right: 0;
+      }
+
+      .marker-corner.br {
+        right: -1px;
+        bottom: -1px;
+        border-top: 0;
+        border-left: 0;
+      }
+
+      .caption {
+        margin: 0.8rem 0 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
+
+      .hint {
+        display: grid;
+        gap: 0.45rem;
+        margin: 1.2rem 0 0;
+        padding: 0.9rem 1rem;
+        border: 1px dashed var(--line);
+        border-radius: 0.85rem;
+        color: #4b4238;
+        font-size: 0.82rem;
+        line-height: 1.5;
+      }
+
+      .hint strong {
+        color: var(--ink);
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 2.9rem;
+        margin-top: 1.2rem;
+        padding: 0.75rem 1rem;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--parchment);
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .warning {
+        margin: 0 0 1rem;
+        padding: 0.75rem 0.9rem;
+        border-radius: 0.75rem;
+        background: #f3dfc0;
+        color: #5c431c;
+        font-size: 0.8rem;
+        line-height: 1.45;
+      }
+
+      .warning[hidden] {
+        display: none;
+      }
+
+      @media print {
+        body {
+          padding: 0;
+          background: #fff;
+        }
+
+        .sheet {
+          width: 100%;
+          padding: 0;
+          border: 0;
+          box-shadow: none;
+        }
+
+        .cta,
+        .warning {
+          display: none;
+        }
+
+        .marker-card {
+          width: 14cm;
+          margin: 1cm auto 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="sheet">
+      <p class="warning" id="same-device-warning" hidden>
+        You are viewing this marker on the same phone you want to scan with. Open this page on a laptop,
+        tablet, or print it, then point your phone at that screen.
+      </p>
+      <p class="eyebrow">Lumen Museum · Hiro Hunt</p>
+      <h1>Scan this marker</h1>
+      <p class="lede">
+        Keep this page open on a second screen — a laptop, a tablet, or a printed sheet — then point
+        your phone at it inside the scan frame.
+      </p>
+
+      <div class="marker-card">
+        <span class="marker-corner tl" aria-hidden="true"></span>
+        <span class="marker-corner tr" aria-hidden="true"></span>
+        <span class="marker-corner bl" aria-hidden="true"></span>
+        <span class="marker-corner br" aria-hidden="true"></span>
+        <img src="/pattern-hiro.png" alt="Hiro augmented reality marker" width="512" height="512" />
+      </div>
+      <p class="caption">Hiro pattern · keep the white space around the square visible</p>
+
+      <div class="hint">
+        <p><strong>Hold 20–30 cm away.</strong> Fill about two thirds of the frame with the square.</p>
+        <p><strong>Mind the glare.</strong> Tilt the second screen or move out of direct light.</p>
+        <p>
+          <strong>Demo mode.</strong> Every successful scan unlocks the next stop, so you can finish
+          all five with this single marker.
+        </p>
+      </div>
+
+      <a class="cta" href="/">Open Hiro Hunt</a>
+    </main>
+
+    <script>
+      if (window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 900) {
+        document.getElementById('same-device-warning').hidden = false;
+      }
+    </script>
+  </body>
+</html>
