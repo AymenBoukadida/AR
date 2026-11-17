@@ -653,7 +653,8 @@ body:not(.is-scanning) #arjs-video {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  padding: calc(env(safe-area-inset-top) + 0.85rem) 1rem 0.85rem;
+  padding: calc(env(safe-area-inset-top) + 0.85rem) max(1rem, env(safe-area-inset-right)) 0.85rem
+    max(1rem, env(safe-area-inset-left));
 }
 
 .icon-button {
@@ -803,7 +804,8 @@ body:not(.is-scanning) #arjs-video {
   left: 0;
   right: 0;
   z-index: 3;
-  padding: 0 1.4rem calc(env(safe-area-inset-bottom) + 2rem);
+  padding: 0 max(1.4rem, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 2rem)
+    max(1.4rem, env(safe-area-inset-left));
   text-align: center;
 }
 
@@ -855,7 +857,8 @@ body:not(.is-scanning) #arjs-video {
   max-width: 30rem;
   max-height: 90vh;
   margin: 0 auto;
-  padding: 1rem 1.15rem calc(env(safe-area-inset-bottom) + 1.2rem);
+  padding: 1rem max(1.15rem, env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 1.2rem)
+    max(1.15rem, env(safe-area-inset-left));
   overflow-y: auto;
   border-top: 1px solid var(--line-strong);
   border-radius: 1.6rem 1.6rem 0 0;
@@ -954,6 +957,16 @@ body:not(.is-scanning) #arjs-video {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@supports (height: 100dvh) {
+  .reticle {
+    width: min(72vw, 19rem, 54dvh);
+  }
+
+  .reveal-sheet {
+    max-height: 90dvh;
   }
 }
 
