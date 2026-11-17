@@ -9,12 +9,72 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/icon.svg" />
     <title>Hiro Hunt · The Midnight Museum</title>
+    <script>
+      (function () {
+        var shown = false;
+        function showFallback() {
+          if (shown) return;
+          var app = document.getElementById('app');
+          var fallback = document.getElementById('boot-fallback');
+          if (!fallback) return;
+          if (app && app.childElementCount > 0) return;
+          shown = true;
+          fallback.hidden = false;
+        }
+        window.addEventListener(
+          'error',
+          function (event) {
+            if (event.target && event.target.tagName === 'SCRIPT') showFallback();
+          },
+          true,
+        );
+        window.setTimeout(showFallback, 10000);
+      })();
+    </script>
     <script defer src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@ar-js-org/ar.js@3.4.5/aframe/build/aframe-ar.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <div id="overlay"></div>
+    <div
+      id="boot-fallback"
+      hidden
+      style="
+        max-width: 28rem;
+        margin: 15vh auto 0;
+        padding: 1.25rem;
+        border: 1px solid #3a332b;
+        border-radius: 1rem;
+        background: #1d1814;
+        color: #f6efe3;
+        font-family: system-ui, sans-serif;
+        line-height: 1.5;
+      "
+    >
+      <p style="margin: 0 0 0.5rem; font-size: 1.1rem; font-weight: 700">Hiro Hunt could not start.</p>
+      <p style="margin: 0 0 0.9rem; color: #d8cdbd; font-size: 0.9rem">
+        Your browser may be holding an older copy of the app. Reload the page. If it stays blank, clear this site's
+        data in your browser settings and open it again.
+      </p>
+      <button
+        type="button"
+        onclick="location.reload()"
+        style="
+          width: 100%;
+          min-height: 2.75rem;
+          border: 0;
+          border-radius: 999px;
+          background: #e7c07a;
+          color: #171310;
+          font: inherit;
+          font-weight: 700;
+          cursor: pointer;
+        "
+      >
+        Reload
+      </button>
+    </div>
     <noscript>Hiro Hunt needs JavaScript and camera access to run the AR hunt.</noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
