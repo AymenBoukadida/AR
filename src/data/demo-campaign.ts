@@ -14,35 +14,35 @@ export const demoCampaign: Campaign = {
     {
       id: 'atrium',
       title: 'The Grand Atrium',
-      area: 'Ground floor Â· under the skylight',
+      area: 'Ground floor · under the skylight',
       clue: 'Start where the marble floor holds the daylight.',
       markerId: 'hiro-main',
     },
     {
       id: 'clock-hall',
       title: 'Hall of Clocks',
-      area: 'First floor Â· east wing',
+      area: 'First floor · east wing',
       clue: 'Find the room where every clock disagrees.',
       markerId: 'hiro-main',
     },
     {
       id: 'sculpture-court',
       title: 'The Sculpture Court',
-      area: 'Ground floor Â· open air',
+      area: 'Ground floor · open air',
       clue: 'Look for the figure who has stood still the longest.',
       markerId: 'hiro-main',
     },
     {
       id: 'cabinet',
       title: 'Cabinet of Wonders',
-      area: 'Lower level Â· room 04',
+      area: 'Lower level · room 04',
       clue: 'Small things, strange labels, one locked drawer.',
       markerId: 'hiro-main',
     },
     {
       id: 'rooftop',
       title: 'The Rooftop',
-      area: 'Fifth floor Â· observatory',
+      area: 'Fifth floor · observatory',
       clue: 'Climb until the city becomes part of the exhibit.',
       markerId: 'hiro-main',
     },
@@ -68,7 +68,7 @@ export const demoCampaign: Campaign = {
       id: 'marble-sneeze',
       stopId: 'sculpture-court',
       title: 'The Marble Sneeze',
-      description: 'A sculptorâ€™s unfinished masterpiece, frozen one second before the achoo.',
+      description: 'A sculptor’s unfinished masterpiece, frozen one second before the achoo.',
       rarity: 'rare',
       imageSrc: '/art/sneeze.svg',
     },
@@ -94,4 +94,3 @@ export const demoCampaign: Campaign = {
 export function getCollectible(campaign: Campaign, id: string): Collectible | undefined {
   return campaign.collectibles.find((collectible) => collectible.id === id);
 }
-

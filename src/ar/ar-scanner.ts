@@ -21,6 +21,7 @@ export function createMarkerDiscoveryHandler(
 }
 
 const MAX_PLANE_WIDTH = 2.4;
+const AR_VIDEO_ID = 'arjs-video';
 
 const round = (value: number): number => Math.round(value * 1000) / 1000;
 
@@ -41,35 +42,63 @@ function loadImageSize(src: string): Promise<{ width: number; height: number }> 
   });
 }
 
+function stopStream(video: HTMLVideoElement): void {
+  const stream = video.srcObject;
+  if (stream instanceof MediaStream) stream.getTracks().forEach((track) => track.stop());
+  video.srcObject = null;
+}
+
+export function clearArVideo(): void {
+  for (const video of Array.from(document.querySelectorAll<HTMLVideoElement>(`#${AR_VIDEO_ID}`))) {
+    stopStream(video);
+    video.remove();
+  }
+  document.getElementById('error-popup')?.remove();
+}
+
 export function createArScanner(): ArScanner {
   let discoveryHandler: (collectibleId: string) => void = () => undefined;
   let statusHandler: (status: ScannerRuntimeStatus, detail?: string) => void = () => undefined;
   let scene: HTMLElement | undefined;
+  let viewport: HTMLElement | undefined;
   let found = false;
-  let videoReadyHandler: (() => void) | undefined;
+  let videoHandler: (() => void) | undefined;
+  let cameraErrorHandler: (() => void) | undefined;
   let readyTimer: number | undefined;
+  let adoptTimer: number | undefined;
 
-  const clearListeners = (): void => {
-    if (videoReadyHandler) window.removeEventListener('arjs-video-loaded', videoReadyHandler);
-    videoReadyHandler = undefined;
+  const clearTimers = (): void => {
+    if (videoHandler) window.removeEventListener('arjs-video-loaded', videoHandler);
+    videoHandler = undefined;
+    if (cameraErrorHandler) window.removeEventListener('camera-error', cameraErrorHandler);
+    cameraErrorHandler = undefined;
     if (readyTimer !== undefined) window.clearTimeout(readyTimer);
     readyTimer = undefined;
+    if (adoptTimer !== undefined) window.clearInterval(adoptTimer);
+    adoptTimer = undefined;
   };
 
-  const stopVideoTracks = (): void => {
-    if (!scene) return;
-    for (const video of Array.from(scene.querySelectorAll('video'))) {
-      const stream = video.srcObject;
-      if (stream instanceof MediaStream) stream.getTracks().forEach((track) => track.stop());
-      video.srcObject = null;
-    }
+  const adoptCamera = (): boolean => {
+    if (!viewport) return false;
+    const video = document.getElementById(AR_VIDEO_ID);
+    if (!(video instanceof HTMLVideoElement)) return false;
+    if (video.parentElement !== viewport) viewport.prepend(video);
+    void video.play().catch(() => undefined);
+    return true;
+  };
+
+  const onCameraReady = (): void => {
+    if (!adoptCamera() || found) return;
+    clearTimers();
+    statusHandler('scanning');
   };
 
   const stop = (): void => {
-    clearListeners();
-    stopVideoTracks();
+    clearTimers();
+    clearArVideo();
     scene?.remove();
     scene = undefined;
+    viewport = undefined;
     found = false;
   };
 
@@ -92,9 +121,11 @@ export function createArScanner(): ArScanner {
       const image = await loadImageSize(target.collectible.imageSrc);
       const plane = planeSizeFor(image.width, image.height);
 
+      viewport = container;
       scene = document.createElement('a-scene');
       scene.setAttribute('embedded', '');
       scene.setAttribute('renderer', 'alpha: true; antialias: true;');
+      scene.setAttribute('background', 'transparent: true');
       scene.setAttribute('loading-screen', 'enabled: false');
       scene.setAttribute('vr-mode-ui', 'enabled: false');
       scene.setAttribute('device-orientation-permission-ui', 'enabled: false');
@@ -134,16 +165,27 @@ export function createArScanner(): ArScanner {
         discoveryHandler(target.collectible.id);
       });
 
+      videoHandler = onCameraReady;
+      window.addEventListener('arjs-video-loaded', videoHandler);
+
+      cameraErrorHandler = () => {
+        if (found) return;
+        clearTimers();
+        statusHandler('error', 'denied');
+      };
+      window.addEventListener('camera-error', cameraErrorHandler);
+
       container.append(scene);
 
-      videoReadyHandler = () => {
-        if (!found) statusHandler('scanning');
-      };
-      window.addEventListener('arjs-video-loaded', videoReadyHandler);
+      adoptTimer = window.setInterval(() => {
+        if (adoptCamera()) onCameraReady();
+      }, 250);
 
       readyTimer = window.setTimeout(() => {
-        if (!found) statusHandler('scanning');
-      }, 2500);
+        if (found) return;
+        clearTimers();
+        statusHandler('error', 'timeout');
+      }, 15000);
     },
 
     stop,

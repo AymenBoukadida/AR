@@ -6,6 +6,8 @@ export interface CameraEnvironment {
   permissionState?: PermissionState;
 }
 
+let grantedThisSession = false;
+
 function browserEnvironment(): CameraEnvironment {
   return {
     isSecureContext: window.isSecureContext,
@@ -33,14 +35,22 @@ export async function checkCameraPermission(environment: CameraEnvironment = bro
 }
 
 export async function requestCameraAccess(): Promise<CameraPermissionStatus> {
+  if (grantedThisSession) return 'granted';
+
   const status = await checkCameraPermission();
-  if (status !== 'prompt') return status;
+  if (status !== 'prompt') {
+    if (status === 'granted') grantedThisSession = true;
+    return status;
+  }
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
     stream.getTracks().forEach((track) => track.stop());
+    grantedThisSession = true;
+    await new Promise((resolve) => window.setTimeout(resolve, 450));
     return 'granted';
-  } catch {
-    return 'denied';
+  } catch (error) {
+    const name = error instanceof DOMException ? error.name : '';
+    return name === 'NotAllowedError' || name === 'SecurityError' ? 'denied' : 'unavailable';
   }
 }

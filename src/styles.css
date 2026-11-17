@@ -607,11 +607,31 @@ img {
 }
 
 .ar-viewport video {
-  z-index: 0;
+  z-index: 0 !important;
+  object-fit: cover;
+  background: #05060a;
 }
 
 .ar-viewport a-scene {
   z-index: 1;
+  background: transparent;
+}
+
+.ar-viewport .a-canvas,
+.ar-viewport canvas {
+  background: transparent !important;
+}
+
+#arjs-video {
+  pointer-events: none;
+}
+
+body:not(.is-scanning) #arjs-video {
+  display: none !important;
+}
+
+#error-popup {
+  display: none !important;
 }
 
 .scanner-shade {
@@ -710,7 +730,7 @@ img {
   top: 50%;
   left: 50%;
   z-index: 3;
-  width: min(72vw, 19rem);
+  width: min(72vw, 19rem, 54vh);
   aspect-ratio: 1;
   transform: translate(-50%, -54%);
   transition: opacity 0.3s ease;
@@ -948,7 +968,22 @@ img {
 }
 
 @media (max-height: 46rem) {
+  .scanner-bar {
+    padding-top: calc(env(safe-area-inset-top) + 0.55rem);
+    padding-bottom: 0.55rem;
+  }
+
+  .scanner-footer {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  }
+
+  .scanner-tip {
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+  }
+
   .reveal-sheet {
+    max-height: calc(100vh - 4.75rem);
     padding-top: 0.75rem;
   }
 
@@ -958,6 +993,7 @@ img {
 
   .reveal-media img {
     max-height: 9rem;
+    object-fit: contain;
   }
 
   .reveal-body h2 {
@@ -970,6 +1006,33 @@ img {
 
   .reveal-meta {
     margin-bottom: 0.75rem;
+  }
+}
+
+@media (max-height: 46rem) and (min-width: 40rem) {
+  .reveal-sheet {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: 0 1.2rem;
+    max-width: 46rem;
+  }
+
+  .reveal-eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .reveal-media {
+    margin-top: 0.7rem;
+  }
+
+  .reveal-media img {
+    aspect-ratio: 4 / 3;
+    max-height: 11rem;
+  }
+
+  .reveal-body {
+    padding-top: 0.55rem;
   }
 }
 
